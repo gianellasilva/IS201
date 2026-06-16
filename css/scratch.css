@@ -3,7 +3,7 @@ body {
     background-position: center;
     font-family: "Merriweather Sans", sans-serif;
     color: #f9f9f9;
-    font-size: 25px;
+    font-size: 15px;
 }
 
 .nav {
@@ -28,11 +28,6 @@ body {
 
 h2 {
     color:rgb(207, 136, 79)
-}
-
-.intro {
-    color: brown;
-    font-size: 24px;
 }
 
 .content {
@@ -83,7 +78,7 @@ a {
     border: 2px solid #ffb6d9;
 }
 .tableauBox {
-    padding-left: 50px;
+    padding-left: 55px;
 }
 
 .concept{
