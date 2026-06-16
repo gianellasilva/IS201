@@ -55,5 +55,8 @@ section {
 }
 .navbarCustom {
     padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 5px;
+}
+.navbar-brand {
+    padding-right: 30px;
 }
