@@ -1,0 +1,59 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    color: black;
+}
+.aboutText {
+    font-size: 17px;
+}
+li {
+    font-size: 17px;
+    font-weight: normal;
+}
+
+.jobTitle {
+    font-style: italic;
+    font-size: 17px;
+}
+.jobDate {
+    font-size: 17px;
+}
+
+.resumeListHeading {
+    font-weight: bold;
+    font-style: normal;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.justify {
+    text-align: justify;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+.homebg {
+    background-image: url("../assets/Background - resume.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+section {
+    padding-top: 40px;
+    padding-bottom: 60px;
+}
+.navbarCustom {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}

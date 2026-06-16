@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Pit Stop Challenge</title>
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #090909;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gameCard {
+            width: 90%;
+            max-width: 900px;
+            background: #151515;
+            border: 2px solid #e10600;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(225, 6, 0, 0.35);
+            text-align: center;
+        }
+
+        h1 {
+            color: #e10600;
+            letter-spacing: 2px;
+        }
+
+        .instructions {
+            background: #222;
+            border-left: 5px solid #e10600;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
+            border-radius: 10px;
+        }
+
+        .car {
+            position: relative;
+            width: 360px;
+            height: 150px;
+            margin: 30px auto;
+        }
+
+        .carBody {
+            position: absolute;
+            top: 50px;
+            left: 70px;
+            width: 220px;
+            height: 50px;
+            background: #e10600;
+            border-radius: 40px 40px 20px 20px;
+        }
+
+        .carNose {
+            position: absolute;
+            top: 62px;
+            left: 280px;
+            width: 70px;
+            height: 25px;
+            background: #e10600;
+            border-radius: 0 30px 30px 0;
+        }
+
+        .wing {
+            position: absolute;
+            background: white;
+            height: 12px;
+            border-radius: 5px;
+        }
+
+        .frontWing {
+            top: 68px;
+            left: 330px;
+            width: 45px;
+        }
+
+        .rearWing {
+            top: 45px;
+            left: 35px;
+            width: 55px;
+        }
+
+        .tire {
+            position: absolute;
+            width: 48px;
+            height: 48px;
+            background: #050505;
+            border: 5px solid #777;
+            border-radius: 50%;
+        }
+
+        .frontLeft { top: 20px; left: 250px; }
+        .frontRight { top: 92px; left: 250px; }
+        .rearLeft { top: 20px; left: 75px; }
+        .rearRight { top: 92px; left: 75px; }
+
+        .pitGrid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .module {
+            background: #202020;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #444;
+        }
+
+        .moduleHeader {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .bar {
+            position: relative;
+            height: 24px;
+            background: #080808;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid #555;
+        }
+
+        .greenZone {
+            position: absolute;
+            left: 42%;
+            width: 16%;
+            height: 100%;
+            background: #00c853;
+        }
+
+        .indicator {
+            position: absolute;
+            left: 0%;
+            width: 10px;
+            height: 100%;
+            background: white;
+            box-shadow: 0 0 10px white;
+        }
+
+        .status {
+            margin-top: 8px;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        button {
+            background: #e10600;
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 15px 8px 0;
+        }
+
+        button:hover {
+            background: #ff2a23;
+            transform: scale(1.04);
+        }
+
+        a {
+            display: block;
+            margin-top: 25px;
+            color: white;
+        }
+
+        @media (max-width: 700px) {
+            .pitGrid {
+                grid-template-columns: 1fr;
+            }
+
+            .car {
+                transform: scale(0.85);
+            }
+        }
+        .tireChanged {
+        border-color: #00c853;
+        box-shadow: 0 0 18px #00c853;
+        }
+
+        .tireMissed {
+        border-color: #e10600;
+        box-shadow: 0 0 18px #e10600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="gameCard">
+         <h1>F1 PIT STOP CHALLENGE</h1>
+
+    <div class="instructions">
+        <strong>Goal:</strong> Change all four tires as quickly and accurately as possible.<br>
+        Press <strong>Q</strong>, <strong>W</strong>, <strong>O</strong>, and <strong>P</strong>
+        when each indicator reaches the green zone.
+    </div>
+
+        <div id="countdown" style="
+            font-size:32px;
+            font-weight:bold;
+            color:white;
+            margin:20px 0;
+            text-align:center;
+    ">
+            Awaiting car
+        </div>
+        <div class="car">
+            <div class="rearWing wing"></div>
+            <div class="carBody"></div>
+            <div class="carNose"></div>
+            <div class="frontWing wing"></div>
+
+            <div class="tire frontLeft" id="tire0"></div>
+            <div class="tire frontRight" id="tire1"></div>
+            <div class="tire rearLeft" id="tire2"></div>
+            <div class="tire rearRight" id="tire3"></div>
+        </div>
+
+         <button onclick="startCountdown()">Start Pit Stop</button>
+         <button onclick="window.location.reload()">Restart</button>
+
+        <div class="pitGrid">
+            <div class="module">
+                <div class="moduleHeader">
+                    <span>Front Left</span>
+                    <span>Press Q</span>
+                </div>
+                <div class="bar">
+                    <div class="greenZone"></div>
+                    <div class="indicator"></div>
+                </div>
+                <div class="status">Waiting</div>
+            </div>
+
+            <div class="module">
+                <div class="moduleHeader">
+                    <span>Front Right</span>
+                    <span>Press W</span>
+                </div>
+                <div class="bar">
+                    <div class="greenZone"></div>
+                    <div class="indicator"></div>
+                </div>
+                <div class="status">Waiting</div>
+            </div>
+
+            <div class="module">
+                <div class="moduleHeader">
+                    <span>Rear Left</span>
+                    <span>Press O</span>
+                </div>
+                <div class="bar">
+                    <div class="greenZone"></div>
+                    <div class="indicator"></div>
+                </div>
+                <div class="status">Waiting</div>
+            </div>
+
+            <div class="module">
+                <div class="moduleHeader">
+                    <span>Rear Right</span>
+                    <span>Press P</span>
+                </div>
+                <div class="bar">
+                    <div class="greenZone"></div>
+                    <div class="indicator"></div>
+                </div>
+                <div class="status">Waiting</div>
+            </div>
+        </div>
+
+        <a href="../index.html">Back to Scratch Page</a>
+    </div>
+   <script>
+    let gameActive = false;
+    let completedTires = 0;
+    let animation;
+
+    const tires = {
+        q: { id: 0, position: 0, direction: 1, speed: 1.6, done: false },
+        w: { id: 1, position: 0, direction: 1, speed: 1.3, done: false },
+        o: { id: 2, position: 0, direction: 1, speed: 1.8, done: false },
+        p: { id: 3, position: 0, direction: 1, speed: 1.5, done: false }
+    };
+
+    function startCountdown() {
+        let count = 3;
+        document.getElementById("countdown").textContent = count;
+
+        const countdownInterval = setInterval(() => {
+            count--;
+
+            if (count > 0) {
+                document.getElementById("countdown").textContent = count;
+            } else if (count === 0) {
+                document.getElementById("countdown").textContent = "GO!";
+            } else {
+                clearInterval(countdownInterval);
+                document.getElementById("countdown").textContent = "PIT STOP IN PROGRESS";
+                startGame();
+            }
+        }, 1000);
+    }
+
+    function startGame() {
+        gameActive = true;
+        moveBars();
+    }
+
+    function moveBars() {
+        const indicators = document.querySelectorAll(".indicator");
+
+        for (let key in tires) {
+            let tire = tires[key];
+
+            if (!tire.done) {
+                tire.position += tire.speed * tire.direction;
+
+                if (tire.position >= 98) {
+                    tire.position = 98;
+                    tire.direction = -1;
+                }
+
+                if (tire.position <= 0) {
+                    tire.position = 0;
+                    tire.direction = 1;
+                }
+
+                indicators[tire.id].style.left = tire.position + "%";
+            }
+        }
+
+        if (gameActive) {
+            animation = requestAnimationFrame(moveBars);
+        }
+    }
+
+    document.addEventListener("keydown", function(event) {
+        const keyPressed = event.key.toLowerCase();
+
+        if (!gameActive || !tires[keyPressed]) {
+            return;
+        }
+
+        checkTire(keyPressed);
+    });
+
+    function checkTire(keyPressed) {
+        let tire = tires[keyPressed];
+
+        if (tire.done) {
+            return;
+        }
+
+        let position = tire.position;
+        let statusText = "";
+        let tireElement = document.getElementById("tire" + tire.id);
+
+        if (position >= 42 && position <= 58) {
+            statusText = "Changed";
+            tireElement.classList.add("tireChanged");
+        } else {
+            statusText = "Missed";
+            tireElement.classList.add("tireMissed");
+        }
+
+        completedTires++;
+        tire.done = true;
+
+        const statuses = document.querySelectorAll(".status");
+        statuses[tire.id].textContent = statusText;
+
+        if (completedTires === 4) {
+            endGame();
+        }
+    }
+
+    function endGame() {
+    gameActive = false;
+    cancelAnimationFrame(animation);
+
+    let perfectCount = 0;
+    let goodCount = 0;
+    let missedCount = 0;
+
+    const statuses = document.querySelectorAll(".status");
+
+    statuses.forEach(status => {
+        if (status.textContent === "Changed") {
+            perfectCount++;
+        } else {
+            missedCount++;
+        }
+    });
+
+    let score = (perfectCount * 100) + (missedCount * 25);
+
+    let rating = "";
+
+    if (score === 400) {
+        rating = "🏆 Record Pit Stop";
+    } else if (score >= 300) {
+        rating = "🥈 Race Winning Pit Stop";
+    } else if (score >= 200) {
+        rating = "🏁 Solid Pit Stop";
+    } else {
+        rating = "🔧 Needs More Practice";
+    }
+
+    document.getElementById("countdown").innerHTML =
+        `
+        PIT STOP COMPLETE<br><br>
+        Final Score: ${score} / 400<br><br>
+        ${rating}
+        `;
+}
+</script>
+
+</body>
+</html>
