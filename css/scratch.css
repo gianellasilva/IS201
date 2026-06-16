@@ -2,7 +2,7 @@ body {
     background-image: url("../assets/Wall.jpg");
     background-position: center;
     font-family: "Merriweather Sans", sans-serif;
-    color: #f9f9f9;
+    color: white;
     font-size: 22px;
 }
 
@@ -13,7 +13,7 @@ body {
 }
 
 .nav a {
-    color: #FFF8E7;
+    color: white;
     text-decoration: none;
     font-weight: bold;
     margin-left: 30px;
@@ -31,7 +31,7 @@ body {
 }
 
 .tourTitle {
-    color: #df9b79;
+    color: #e79064;
 }
 
 .movieTitle {
@@ -79,7 +79,6 @@ a {
     text-align: justify;
 }
 
-
 .smallImg {
     width: 350px;
     margin: 10px;
@@ -97,7 +96,7 @@ a {
     padding: 180px;
 }
 .concept p {
-    color: #FFF8E7;
+    color: white;
     margin-top: -125px;
 }
 
