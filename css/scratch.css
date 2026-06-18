@@ -28,6 +28,7 @@ body {
 
 .visualsTitle {
     color: #e36bc7;
+    font-family:  Tahoma, sans-serif;
 }
 
 .tourTitle {
@@ -36,6 +37,7 @@ body {
 
 .movieTitle {
     color: black;
+    font-family: Palatino, serif;
 }
 
 .content {
