@@ -17,7 +17,7 @@ body {
     text-decoration: none;
     font-weight: bold;
     margin-left: 30px;
-    font-family: Geneva, sans-serif;
+    font-family: arial, sans-serif;
     font-size: 18px;
 }
 
@@ -28,17 +28,18 @@ body {
 
 .visualsTitle {
     color: #e36bc7;
-    font-family:  Tahoma, sans-serif;
+    font-family: Franklin Gothic Medium, sans-serif;
 }
 
 .tourTitle {
     color: #e79064;
-}
+    font-family: Goudy Old Style, serif;
+    }
 
 .movieTitle {
     color: black;
-    font-family: Palatino, serif;
-}
+    font-family: Arial Narrow, sans-serif;
+    }
 
 .content {
     background-color: #637594;
